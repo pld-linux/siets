@@ -1,5 +1,5 @@
 %define		_snap	20060810
-%define		_rel	0.1
+%define		_rel	0.2
 Summary:	siets
 Name:		siets
 Version:	3.4.3
@@ -17,6 +17,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sbindir	%{_prefix}/crawler/bin
 %define		_cgidir		/home/services/apache/cgi-bin/siets
 %define		_htmldir	/home/services/apache/html/siets
+%define		_sysconfdir	/etc/siets
 
 %description
 Siets is an innovative software platform for development and operation
@@ -61,306 +62,197 @@ install sem/cgi-bin/api.cgi $RPM_BUILD_ROOT%{_cgidir}
 install sem/cgi-bin/geteml.cgi $RPM_BUILD_ROOT%{_cgidir}
 install sem/cgi-bin/api-ws.cgi $RPM_BUILD_ROOT%{_cgidir}
 install sem/cgi-bin/api-ws.disco $RPM_BUILD_ROOT%{_cgidir}
-#install /home/services/apache/cgi-bin/siets/api.html
-#install /home/services/apache/cgi-bin/siets/api.wsdl
+#install %{_cgidir}/api.html
+#install %{_cgidir}/api.wsdl
 
 cp -a server/api/search.html $RPM_BUILD_ROOT%{_htmldir}
 cp -a server/api/mail_form.html $RPM_BUILD_ROOT%{_htmldir}
 cp -a server/api/parop.js $RPM_BUILD_ROOT%{_htmldir}
 
-cp -a server/conf/char_stats/*.stat $RPM_BUILD_ROOT/usr/local/siets/crawler/conf/char_stats
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/conf/char_stats
+cp -a server/conf/char_stats/*.stat $RPM_BUILD_ROOT%{_prefix}/crawler/conf/char_stats
 
-install -d $RPM_BUILD_ROOT/usr/local/siets/conf/templates
-cp -a server/conf/templates/*.xml $RPM_BUILD_ROOT/usr/local/siets/conf/templates
-install -D server/conf/content.type $RPM_BUILD_ROOT/usr/local/siets/crawler/conf/content.type
+install -d $RPM_BUILD_ROOT%{_prefix}/conf/templates
+cp -a server/conf/templates/*.xml $RPM_BUILD_ROOT%{_prefix}/conf/templates
+install -D server/conf/content.type $RPM_BUILD_ROOT%{_prefix}/crawler/conf/content.type
 
-install -D server/extensions/antiword/bin/antiword $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/antiword/bin/antiword
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/antiword/data
-cp -a server/extensions/antiword/data/* $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/antiword/data
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/antiword/lic
-cp -a server/extensions/antiword/lic/* $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/antiword/lic
+install -D server/extensions/antiword/bin/antiword $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/antiword/bin/antiword
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/antiword/data
+cp -a server/extensions/antiword/data/* $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/antiword/data
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/antiword/lic
+cp -a server/extensions/antiword/lic/* $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/antiword/lic
 
-install -D server/extensions/pdftotext/bin/pdftotext $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/pdftotext/bin/pdftotext
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/pdftotext/lic
-cp -a server/extensions/pdftotext/lic/* $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/pdftotext/lic
+install -D server/extensions/pdftotext/bin/pdftotext $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/pdftotext/bin/pdftotext
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/pdftotext/lic
+cp -a server/extensions/pdftotext/lic/* $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/pdftotext/lic
 
-install -D server/extensions/ps2ascii/bin/ps2ascii $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/ps2ascii/bin/ps2ascii
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/ps2ascii/lic
-cp -a ./server/extensions/ps2ascii/lic/* $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/ps2ascii/lic
+install -D server/extensions/ps2ascii/bin/ps2ascii $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/ps2ascii/bin/ps2ascii
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/ps2ascii/lic
+cp -a ./server/extensions/ps2ascii/lic/* $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/ps2ascii/lic
 
-install -D server/extensions/rtf2html/bin/rtf2html $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/rtf2html/bin/rtf2html
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/rtf2html/lic
-cp -a server/extensions/rtf2html/lic/* $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/rtf2html/lic
+install -D server/extensions/rtf2html/bin/rtf2html $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/rtf2html/bin/rtf2html
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/rtf2html/lic
+cp -a server/extensions/rtf2html/lic/* $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/rtf2html/lic
 
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/xlspptToHtml/bin
-install server/extensions/xlspptToHtml/bin/ppthtml $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/xlspptToHtml/bin
-install server/extensions/xlspptToHtml/bin/xlhtml $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/xlspptToHtml/bin
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/xlspptToHtml/lic
-cp -a server/extensions/xlspptToHtml/lic/* $RPM_BUILD_ROOT/usr/local/siets/crawler/extensions/xlspptToHtml/lic
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/xlspptToHtml/bin
+install server/extensions/xlspptToHtml/bin/ppthtml $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/xlspptToHtml/bin
+install server/extensions/xlspptToHtml/bin/xlhtml $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/xlspptToHtml/bin
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/xlspptToHtml/lic
+cp -a server/extensions/xlspptToHtml/lic/* $RPM_BUILD_ROOT%{_prefix}/crawler/extensions/xlspptToHtml/lic
 
-install server/bin/archive-handler $RPM_BUILD_ROOT/usr/local/siets/bin/archive-handler
-install -d $RPM_BUILD_ROOT/usr/local/siets/log
-install -d $RPM_BUILD_ROOT/usr/local/siets/data
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/crawl_tasks
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/log
+install server/bin/archive-handler $RPM_BUILD_ROOT%{_bindir}/archive-handler
+install -d $RPM_BUILD_ROOT%{_prefix}/log
+install -d $RPM_BUILD_ROOT%{_prefix}/data
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/crawl_tasks
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/log
 
 
-install -d $RPM_BUILD_ROOT/usr/local/siets/conf
-cp -a server/conf/access.xml $RPM_BUILD_ROOT/usr/local/siets/conf/access.xml
-cp -a server/conf/managed_inst_cfg.xml $RPM_BUILD_ROOT/usr/local/siets/conf/managed_inst_cfg.xml
-install -d $RPM_BUILD_ROOT/etc/siets
-cp -a server/conf/siets_cfg.xml $RPM_BUILD_ROOT/etc/siets/siets_cfg.xml
-install -d $RPM_BUILD_ROOT/usr/local/siets/crawler/conf
-cp -a server/conf/crawld_cfg.xml $RPM_BUILD_ROOT/usr/local/siets/crawler/conf/crawld_cfg.xml
-install -d $RPM_BUILD_ROOT/home/services/apache/cgi-bin/siets
-cp -a sem/cgi-bin/config.txt $RPM_BUILD_ROOT/home/services/apache/cgi-bin/siets/config.txt
-cp -a sem/cgi-bin/config.xml $RPM_BUILD_ROOT/home/services/apache/cgi-bin/siets/config.xml
+install -d $RPM_BUILD_ROOT%{_prefix}/conf
+cp -a server/conf/access.xml $RPM_BUILD_ROOT%{_prefix}/conf/access.xml
+cp -a server/conf/managed_inst_cfg.xml $RPM_BUILD_ROOT%{_prefix}/conf/managed_inst_cfg.xml
+install -d $RPM_BUILD_ROOT%{_sysconfdir}
+cp -a server/conf/siets_cfg.xml $RPM_BUILD_ROOT%{_sysconfdir}/siets_cfg.xml
+install -d $RPM_BUILD_ROOT%{_prefix}/crawler/conf
+cp -a server/conf/crawld_cfg.xml $RPM_BUILD_ROOT%{_prefix}/crawler/conf/crawld_cfg.xml
+install -d $RPM_BUILD_ROOT%{_cgidir}
+cp -a sem/cgi-bin/config.txt $RPM_BUILD_ROOT%{_cgidir}/config.txt
+cp -a sem/cgi-bin/config.xml $RPM_BUILD_ROOT%{_cgidir}/config.xml
 
-install -d $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/0 $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/10 $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/20 $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/30 $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/40 $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/common $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/images $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/js $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
-cp -a sem/templates/style $RPM_BUILD_ROOT/home/services/apache/html/siets/templates
+install -d $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/0 $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/10 $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/20 $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/30 $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/40 $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/common $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/images $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/js $RPM_BUILD_ROOT%{_htmldir}/templates
+cp -a sem/templates/style $RPM_BUILD_ROOT%{_htmldir}/templates
 
-#TYPE=BIN APP=SEM /home/services/apache/html/siets/index.html
-cp -a sem/startpage/index.html $RPM_BUILD_ROOT/home/services/apache/html/siets
+#TYPE=BIN APP=SEM %{_htmldir}/index.html
+cp -a sem/startpage/index.html $RPM_BUILD_ROOT%{_htmldir}
 
-install sem/cgi-bin/sem.cgi $RPM_BUILD_ROOT/home/services/apache/cgi-bin/siets/sem.cgi
-install -d $RPM_BUILD_ROOT/home/services/apache/html/siets/log
-install -d $RPM_BUILD_ROOT/home/services/apache/html/siets/tmp
+install sem/cgi-bin/sem.cgi $RPM_BUILD_ROOT%{_cgidir}/sem.cgi
+install -d $RPM_BUILD_ROOT%{_htmldir}/log
+install -d $RPM_BUILD_ROOT%{_htmldir}/tmp
 install -d $RPM_BUILD_ROOT/tmp/siets
 install -d $RPM_BUILD_ROOT/tmp/siets/sessions
 
 #TYPE=PAR APP=SEM vercode=1.1.0
-install -d $RPM_BUILD_ROOT/home/services/apache/html/siets/conf
-cp -a sem/conf/manager_cfg.xml $RPM_BUILD_ROOT/home/services/apache/html/siets/conf
-#TYPE=LIC APP=GEN /usr/local/siets/licence.txt
+install -d $RPM_BUILD_ROOT%{_htmldir}/conf
+cp -a sem/conf/manager_cfg.xml $RPM_BUILD_ROOT%{_htmldir}/conf
+#TYPE=LIC APP=GEN %{_prefix}/licence.txt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%config /etc/siets/siets_cfg.xml
-/home/services/apache/cgi-bin/siets/api-ws.cgi
-/home/services/apache/cgi-bin/siets/api-ws.disco
-/home/services/apache/cgi-bin/siets/api.cgi
-/home/services/apache/cgi-bin/siets/config.txt
-/home/services/apache/cgi-bin/siets/config.xml
-/home/services/apache/cgi-bin/siets/geteml.cgi
-/home/services/apache/cgi-bin/siets/sem.cgi
-/home/services/apache/html/siets/conf/manager_cfg.xml
-/home/services/apache/html/siets/index.html
-/home/services/apache/html/siets/mail_form.html
-/home/services/apache/html/siets/parop.js
-/home/services/apache/html/siets/search.html
-/home/services/apache/html/siets/templates/0
-/home/services/apache/html/siets/templates/10/10000000
-/home/services/apache/html/siets/templates/10/10000000.xsl
-/home/services/apache/html/siets/templates/10/10010000
-/home/services/apache/html/siets/templates/10/10010000.xsl
-/home/services/apache/html/siets/templates/10/10010100
-/home/services/apache/html/siets/templates/10/10010110
-/home/services/apache/html/siets/templates/10/10010110.xsl
-/home/services/apache/html/siets/templates/10/10010111.xsl
-/home/services/apache/html/siets/templates/10/10010112
-/home/services/apache/html/siets/templates/10/10010112.xsl
-/home/services/apache/html/siets/templates/10/10010120
-/home/services/apache/html/siets/templates/10/10010120.xsl
-/home/services/apache/html/siets/templates/10/10010122.xsl
-/home/services/apache/html/siets/templates/10/10010130
-/home/services/apache/html/siets/templates/10/10010130.xsl
-/home/services/apache/html/siets/templates/10/10010131
-/home/services/apache/html/siets/templates/10/10010200
-/home/services/apache/html/siets/templates/10/10010200.xsl
-/home/services/apache/html/siets/templates/10/10010300
-/home/services/apache/html/siets/templates/10/10010300.xsl
-/home/services/apache/html/siets/templates/10/10010400
-/home/services/apache/html/siets/templates/10/10010500
-/home/services/apache/html/siets/templates/10/10010500.xsl
-/home/services/apache/html/siets/templates/10/10010600
-/home/services/apache/html/siets/templates/10/10010600.xsl
-/home/services/apache/html/siets/templates/10/10020000
-/home/services/apache/html/siets/templates/10/10020000.xsl
-/home/services/apache/html/siets/templates/10/10040000
-/home/services/apache/html/siets/templates/10/10040000.xsl
-/home/services/apache/html/siets/templates/10/srcLinks.last
-/home/services/apache/html/siets/templates/20/20000000
-/home/services/apache/html/siets/templates/20/20000000.xsl
-/home/services/apache/html/siets/templates/20/20010000
-/home/services/apache/html/siets/templates/20/20010000.xsl
-/home/services/apache/html/siets/templates/30/30010000
-/home/services/apache/html/siets/templates/30/30010000.xsl
-/home/services/apache/html/siets/templates/30/30010002
-/home/services/apache/html/siets/templates/30/30010002.xsl
-/home/services/apache/html/siets/templates/30/30020000
-/home/services/apache/html/siets/templates/30/30020000.xsl
-/home/services/apache/html/siets/templates/40/40000000
-/home/services/apache/html/siets/templates/40/40000000.xsl
-/home/services/apache/html/siets/templates/40/40010000
-/home/services/apache/html/siets/templates/40/40010000.xsl
-/home/services/apache/html/siets/templates/40/40020100
-/home/services/apache/html/siets/templates/40/40020100.xsl
-/home/services/apache/html/siets/templates/40/40020110
-/home/services/apache/html/siets/templates/40/40020110.xsl
-/home/services/apache/html/siets/templates/40/40020111
-/home/services/apache/html/siets/templates/40/40020111.xsl
-/home/services/apache/html/siets/templates/40/40020112
-/home/services/apache/html/siets/templates/40/40020112.xsl
-/home/services/apache/html/siets/templates/40/40020113
-/home/services/apache/html/siets/templates/40/40020113.xsl
-/home/services/apache/html/siets/templates/40/40020114
-/home/services/apache/html/siets/templates/40/40020115
-/home/services/apache/html/siets/templates/40/40020115.xsl
-/home/services/apache/html/siets/templates/40/40020116
-/home/services/apache/html/siets/templates/40/40020116.xsl
-/home/services/apache/html/siets/templates/40/40020117
-/home/services/apache/html/siets/templates/40/40020117.xsl
-/home/services/apache/html/siets/templates/40/40020118
-/home/services/apache/html/siets/templates/40/40020118.xsl
-/home/services/apache/html/siets/templates/40/40020119
-/home/services/apache/html/siets/templates/40/40020119.xsl
-/home/services/apache/html/siets/templates/40/40030000
-/home/services/apache/html/siets/templates/40/40030000.xsl
-/home/services/apache/html/siets/templates/40/40030100
-/home/services/apache/html/siets/templates/40/40030100.xsl
-/home/services/apache/html/siets/templates/40/40030200
-/home/services/apache/html/siets/templates/40/40030200.xsl
-/home/services/apache/html/siets/templates/common/authorization.inc
-/home/services/apache/html/siets/templates/common/errors.xml
-/home/services/apache/html/siets/templates/common/footer.inc
-/home/services/apache/html/siets/templates/common/header.inc
-/home/services/apache/html/siets/templates/common/warnings.xml
-/home/services/apache/html/siets/templates/images/lo1.gif
-/home/services/apache/html/siets/templates/images/uzaugshu.gif
-/home/services/apache/html/siets/templates/images/uzleju.gif
-/home/services/apache/html/siets/templates/images/x.gif
-/home/services/apache/html/siets/templates/js/class/Applet1$Mouse.class
-/home/services/apache/html/siets/templates/js/class/Applet1.class
-/home/services/apache/html/siets/templates/js/class/DiagonalLayout.class
-/home/services/apache/html/siets/templates/js/class/DocHandler.class
-/home/services/apache/html/siets/templates/js/class/Grids.class
-/home/services/apache/html/siets/templates/js/class/QDParser.class
-/home/services/apache/html/siets/templates/js/class/Reporter.class
-/home/services/apache/html/siets/templates/js/def.js
-/home/services/apache/html/siets/templates/js/dom.js
-/home/services/apache/html/siets/templates/js/jsDebugger/gpl.txt
-/home/services/apache/html/siets/templates/js/jsDebugger/img/close.jpg
-/home/services/apache/html/siets/templates/js/jsDebugger/img/max.jpg
-/home/services/apache/html/siets/templates/js/jsDebugger/img/min.jpg
-/home/services/apache/html/siets/templates/js/jsDebugger/img/resize.jpg
-/home/services/apache/html/siets/templates/js/jsDebugger/img/start.jpg
-/home/services/apache/html/siets/templates/js/jsDebugger/img/titlebar.jpg
-/home/services/apache/html/siets/templates/js/jsDebugger/img/titlebar_active.jpg
-/home/services/apache/html/siets/templates/js/jsDebugger/img/treebar.gif
-/home/services/apache/html/siets/templates/js/jsDebugger/img/treebarbottom.gif
-/home/services/apache/html/siets/templates/js/jsDebugger/img/treeline.gif
-/home/services/apache/html/siets/templates/js/jsDebugger/img/treeminus.gif
-/home/services/apache/html/siets/templates/js/jsDebugger/img/treeplus.gif
-/home/services/apache/html/siets/templates/js/jsDebugger/index.html
-/home/services/apache/html/siets/templates/js/jsDebugger/jsDebugger.js
-/home/services/apache/html/siets/templates/js/validator.js
-/home/services/apache/html/siets/templates/js/xmlsax.js
-/home/services/apache/html/siets/templates/js/xmlw3cdom.js
-/home/services/apache/html/siets/templates/style/def.css
-/home/services/apache/html/siets/templates/style/default_web_results.xsl
-/home/services/apache/html/siets/templates/style/mail_list.xsl
-/home/services/apache/html/siets/templates/style/mail_view.xsl
-/home/services/apache/html/siets/templates/style/str.replace.template.xsl
-/home/services/apache/html/siets/templates/style/url_encode.xsl
-/usr/local/siets/bin/archive-handler
-/usr/local/siets/bin/managed-xml
-/usr/local/siets/bin/managedctl
-/usr/local/siets/bin/siets-alertd
-/usr/local/siets/bin/siets-ctrld
-/usr/local/siets/bin/siets-dicd
-/usr/local/siets/bin/siets-dispd
-/usr/local/siets/bin/siets-docd
-/usr/local/siets/bin/siets-load
-/usr/local/siets/bin/siets-masterd
-/usr/local/siets/bin/siets-mtxd
-/usr/local/siets/bin/sietsco
-/usr/local/siets/conf/access.xml
-/usr/local/siets/conf/managed_inst_cfg.xml
-/usr/local/siets/conf/templates/config_template.xml
-/usr/local/siets/conf/templates/default_desc.xml
-/usr/local/siets/conf/templates/mail_config.xml
-/usr/local/siets/conf/templates/mail_desc.xml
-/usr/local/siets/conf/templates/mail_policy.xml
-/usr/local/siets/conf/templates/policy_template.xml
-/usr/local/siets/crawler/bin/cpy
-/usr/local/siets/crawler/bin/crawld
-/usr/local/siets/crawler/bin/crawldctl
-/usr/local/siets/crawler/bin/dom_manager
-/usr/local/siets/crawler/bin/down_manager
-/usr/local/siets/crawler/bin/downloader
-/usr/local/siets/crawler/bin/run_crawler
-/usr/local/siets/crawler/conf/char_stats/EN_CP1257.stat
-/usr/local/siets/crawler/conf/char_stats/LV_CP1257.stat
-/usr/local/siets/crawler/conf/char_stats/LV_ISO88594.stat
-/usr/local/siets/crawler/conf/char_stats/LV_UTF8.stat
-/usr/local/siets/crawler/conf/char_stats/RU_CP1251.stat
-/usr/local/siets/crawler/conf/char_stats/RU_KOI8R.stat
-/usr/local/siets/crawler/conf/char_stats/RU_UTF8.stat
-/usr/local/siets/crawler/conf/content.type
-/usr/local/siets/crawler/conf/crawld_cfg.xml
-/usr/local/siets/crawler/extensions/antiword/bin/antiword
-/usr/local/siets/crawler/extensions/antiword/data/8859-1.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-10.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-13.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-14.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-15.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-16.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-2.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-3.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-4.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-5.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-6.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-7.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-8.txt
-/usr/local/siets/crawler/extensions/antiword/data/8859-9.txt
-/usr/local/siets/crawler/extensions/antiword/data/Default
-/usr/local/siets/crawler/extensions/antiword/data/Example
-/usr/local/siets/crawler/extensions/antiword/data/MacRoman.txt
-/usr/local/siets/crawler/extensions/antiword/data/UTF-8.txt
-/usr/local/siets/crawler/extensions/antiword/data/Unicode01
-/usr/local/siets/crawler/extensions/antiword/data/Unicode15
-/usr/local/siets/crawler/extensions/antiword/data/cp1250.txt
-/usr/local/siets/crawler/extensions/antiword/data/cp1251.txt
-/usr/local/siets/crawler/extensions/antiword/data/cp1252.txt
-/usr/local/siets/crawler/extensions/antiword/data/cp437.txt
-/usr/local/siets/crawler/extensions/antiword/data/cp850.txt
-/usr/local/siets/crawler/extensions/antiword/data/cp852.txt
-/usr/local/siets/crawler/extensions/antiword/data/cp862.txt
-/usr/local/siets/crawler/extensions/antiword/data/cp866.txt
-/usr/local/siets/crawler/extensions/antiword/data/fontnames
-/usr/local/siets/crawler/extensions/antiword/data/fontnames.russian
-/usr/local/siets/crawler/extensions/antiword/data/koi8-r.txt
-/usr/local/siets/crawler/extensions/antiword/data/koi8-u.txt
-/usr/local/siets/crawler/extensions/antiword/data/roman.txt
-/usr/local/siets/crawler/extensions/antiword/lic/COPYING
-/usr/local/siets/crawler/extensions/antiword/lic/ChangeLog
-/usr/local/siets/crawler/extensions/antiword/lic/QandA
-/usr/local/siets/crawler/extensions/antiword/lic/ReadMe
-/usr/local/siets/crawler/extensions/pdftotext/bin/pdftotext
-/usr/local/siets/crawler/extensions/pdftotext/lic/ANNOUNCE
-/usr/local/siets/crawler/extensions/pdftotext/lic/CHANGES
-/usr/local/siets/crawler/extensions/pdftotext/lic/COPYING
-/usr/local/siets/crawler/extensions/pdftotext/lic/INSTALL
-/usr/local/siets/crawler/extensions/pdftotext/lic/README
-/usr/local/siets/crawler/extensions/ps2ascii/bin/ps2ascii
-/usr/local/siets/crawler/extensions/ps2ascii/lic/Copying.htm
-/usr/local/siets/crawler/extensions/ps2ascii/lic/Public.htm
-/usr/local/siets/crawler/extensions/ps2ascii/lic/README
-/usr/local/siets/crawler/extensions/rtf2html/bin/rtf2html
-/usr/local/siets/crawler/extensions/rtf2html/lic/README
-/usr/local/siets/crawler/extensions/rtf2html/lic/README.orig
-/usr/local/siets/crawler/extensions/xlspptToHtml/bin/ppthtml
-/usr/local/siets/crawler/extensions/xlspptToHtml/bin/xlhtml
-/usr/local/siets/crawler/extensions/xlspptToHtml/lic/AUTHORS
-/usr/local/siets/crawler/extensions/xlspptToHtml/lic/COPYING
+%dir %{_sysconfdir}
+%config %{_sysconfdir}/siets_cfg.xml
+%attr(755,root,root) %{_cgidir}/api-ws.cgi
+%attr(755,root,root) %{_cgidir}/api-ws.disco
+%attr(755,root,root) %{_cgidir}/api.cgi
+%attr(755,root,root) %{_cgidir}/config.txt
+%attr(755,root,root) %{_cgidir}/config.xml
+%attr(755,root,root) %{_cgidir}/geteml.cgi
+%attr(755,root,root) %{_cgidir}/sem.cgi
+%dir %{_htmldir}/conf
+%{_htmldir}/conf/manager_cfg.xml
+%{_htmldir}/index.html
+%{_htmldir}/mail_form.html
+%{_htmldir}/parop.js
+%{_htmldir}/search.html
+%dir %{_htmldir}/templates
+%{_htmldir}/templates/*
+%attr(755,root,root) %{_bindir}/archive-handler
+%attr(755,root,root) %{_bindir}/managed-xml
+%attr(755,root,root) %{_bindir}/managedctl
+%attr(755,root,root) %{_bindir}/siets-alertd
+%attr(755,root,root) %{_bindir}/siets-ctrld
+%attr(755,root,root) %{_bindir}/siets-dicd
+%attr(755,root,root) %{_bindir}/siets-dispd
+%attr(755,root,root) %{_bindir}/siets-docd
+%attr(755,root,root) %{_bindir}/siets-load
+%attr(755,root,root) %{_bindir}/siets-masterd
+%attr(755,root,root) %{_bindir}/siets-mtxd
+%attr(755,root,root) %{_bindir}/sietsco
+%{_prefix}/conf/access.xml
+%{_prefix}/conf/managed_inst_cfg.xml
+%{_prefix}/conf/templates/config_template.xml
+%{_prefix}/conf/templates/default_desc.xml
+%{_prefix}/conf/templates/mail_config.xml
+%{_prefix}/conf/templates/mail_desc.xml
+%{_prefix}/conf/templates/mail_policy.xml
+%{_prefix}/conf/templates/policy_template.xml
+%attr(755,root,root) %{_sbindir}/cpy
+%attr(755,root,root) %{_sbindir}/crawld
+%attr(755,root,root) %{_sbindir}/crawldctl
+%attr(755,root,root) %{_sbindir}/dom_manager
+%attr(755,root,root) %{_sbindir}/down_manager
+%attr(755,root,root) %{_sbindir}/downloader
+%attr(755,root,root) %{_sbindir}/run_crawler
+%{_prefix}/crawler/conf/char_stats/EN_CP1257.stat
+%{_prefix}/crawler/conf/char_stats/LV_CP1257.stat
+%{_prefix}/crawler/conf/char_stats/LV_ISO88594.stat
+%{_prefix}/crawler/conf/char_stats/LV_UTF8.stat
+%{_prefix}/crawler/conf/char_stats/RU_CP1251.stat
+%{_prefix}/crawler/conf/char_stats/RU_KOI8R.stat
+%{_prefix}/crawler/conf/char_stats/RU_UTF8.stat
+%{_prefix}/crawler/conf/content.type
+%{_prefix}/crawler/conf/crawld_cfg.xml
+%{_prefix}/crawler/extensions/antiword/bin/antiword
+%{_prefix}/crawler/extensions/antiword/data/8859-1.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-10.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-13.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-14.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-15.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-16.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-2.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-3.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-4.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-5.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-6.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-7.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-8.txt
+%{_prefix}/crawler/extensions/antiword/data/8859-9.txt
+%{_prefix}/crawler/extensions/antiword/data/Default
+%{_prefix}/crawler/extensions/antiword/data/Example
+%{_prefix}/crawler/extensions/antiword/data/MacRoman.txt
+%{_prefix}/crawler/extensions/antiword/data/UTF-8.txt
+%{_prefix}/crawler/extensions/antiword/data/Unicode01
+%{_prefix}/crawler/extensions/antiword/data/Unicode15
+%{_prefix}/crawler/extensions/antiword/data/cp1250.txt
+%{_prefix}/crawler/extensions/antiword/data/cp1251.txt
+%{_prefix}/crawler/extensions/antiword/data/cp1252.txt
+%{_prefix}/crawler/extensions/antiword/data/cp437.txt
+%{_prefix}/crawler/extensions/antiword/data/cp850.txt
+%{_prefix}/crawler/extensions/antiword/data/cp852.txt
+%{_prefix}/crawler/extensions/antiword/data/cp862.txt
+%{_prefix}/crawler/extensions/antiword/data/cp866.txt
+%{_prefix}/crawler/extensions/antiword/data/fontnames
+%{_prefix}/crawler/extensions/antiword/data/fontnames.russian
+%{_prefix}/crawler/extensions/antiword/data/koi8-r.txt
+%{_prefix}/crawler/extensions/antiword/data/koi8-u.txt
+%{_prefix}/crawler/extensions/antiword/data/roman.txt
+%{_prefix}/crawler/extensions/antiword/lic/COPYING
+%{_prefix}/crawler/extensions/antiword/lic/ChangeLog
+%{_prefix}/crawler/extensions/antiword/lic/QandA
+%{_prefix}/crawler/extensions/antiword/lic/ReadMe
+%{_prefix}/crawler/extensions/pdftotext/bin/pdftotext
+%{_prefix}/crawler/extensions/pdftotext/lic/ANNOUNCE
+%{_prefix}/crawler/extensions/pdftotext/lic/CHANGES
+%{_prefix}/crawler/extensions/pdftotext/lic/COPYING
+%{_prefix}/crawler/extensions/pdftotext/lic/INSTALL
+%{_prefix}/crawler/extensions/pdftotext/lic/README
+%{_prefix}/crawler/extensions/ps2ascii/bin/ps2ascii
+%{_prefix}/crawler/extensions/ps2ascii/lic/Copying.htm
+%{_prefix}/crawler/extensions/ps2ascii/lic/Public.htm
+%{_prefix}/crawler/extensions/ps2ascii/lic/README
+%{_prefix}/crawler/extensions/rtf2html/bin/rtf2html
+%{_prefix}/crawler/extensions/rtf2html/lic/README
+%{_prefix}/crawler/extensions/rtf2html/lic/README.orig
+%{_prefix}/crawler/extensions/xlspptToHtml/bin/ppthtml
+%{_prefix}/crawler/extensions/xlspptToHtml/bin/xlhtml
+%{_prefix}/crawler/extensions/xlspptToHtml/lic/AUTHORS
+%{_prefix}/crawler/extensions/xlspptToHtml/lic/COPYING
