@@ -1,5 +1,5 @@
 %define		_snap	20060810
-%define		_rel	0.2
+%define		_rel	0.4
 Summary:	siets
 Name:		siets
 Version:	3.4.3
@@ -177,8 +177,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/siets-masterd
 %attr(755,root,root) %{_bindir}/siets-mtxd
 %attr(755,root,root) %{_bindir}/sietsco
+%dir %{_prefix}/conf
 %{_prefix}/conf/access.xml
 %{_prefix}/conf/managed_inst_cfg.xml
+%dir %{_prefix}/conf/templates
 %{_prefix}/conf/templates/config_template.xml
 %{_prefix}/conf/templates/default_desc.xml
 %{_prefix}/conf/templates/mail_config.xml
@@ -192,6 +194,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/down_manager
 %attr(755,root,root) %{_sbindir}/downloader
 %attr(755,root,root) %{_sbindir}/run_crawler
+%dir %{_prefix}/crawler
+%dir %{_prefix}/crawler/conf
+%{_prefix}/crawler/conf/content.type
+%{_prefix}/crawler/conf/crawld_cfg.xml
+%dir %{_prefix}/crawler/conf/char_stats
 %{_prefix}/crawler/conf/char_stats/EN_CP1257.stat
 %{_prefix}/crawler/conf/char_stats/LV_CP1257.stat
 %{_prefix}/crawler/conf/char_stats/LV_ISO88594.stat
@@ -199,60 +206,31 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/crawler/conf/char_stats/RU_CP1251.stat
 %{_prefix}/crawler/conf/char_stats/RU_KOI8R.stat
 %{_prefix}/crawler/conf/char_stats/RU_UTF8.stat
-%{_prefix}/crawler/conf/content.type
-%{_prefix}/crawler/conf/crawld_cfg.xml
-%{_prefix}/crawler/extensions/antiword/bin/antiword
-%{_prefix}/crawler/extensions/antiword/data/8859-1.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-10.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-13.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-14.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-15.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-16.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-2.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-3.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-4.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-5.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-6.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-7.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-8.txt
-%{_prefix}/crawler/extensions/antiword/data/8859-9.txt
-%{_prefix}/crawler/extensions/antiword/data/Default
-%{_prefix}/crawler/extensions/antiword/data/Example
-%{_prefix}/crawler/extensions/antiword/data/MacRoman.txt
-%{_prefix}/crawler/extensions/antiword/data/UTF-8.txt
-%{_prefix}/crawler/extensions/antiword/data/Unicode01
-%{_prefix}/crawler/extensions/antiword/data/Unicode15
-%{_prefix}/crawler/extensions/antiword/data/cp1250.txt
-%{_prefix}/crawler/extensions/antiword/data/cp1251.txt
-%{_prefix}/crawler/extensions/antiword/data/cp1252.txt
-%{_prefix}/crawler/extensions/antiword/data/cp437.txt
-%{_prefix}/crawler/extensions/antiword/data/cp850.txt
-%{_prefix}/crawler/extensions/antiword/data/cp852.txt
-%{_prefix}/crawler/extensions/antiword/data/cp862.txt
-%{_prefix}/crawler/extensions/antiword/data/cp866.txt
-%{_prefix}/crawler/extensions/antiword/data/fontnames
-%{_prefix}/crawler/extensions/antiword/data/fontnames.russian
-%{_prefix}/crawler/extensions/antiword/data/koi8-r.txt
-%{_prefix}/crawler/extensions/antiword/data/koi8-u.txt
-%{_prefix}/crawler/extensions/antiword/data/roman.txt
-%{_prefix}/crawler/extensions/antiword/lic/COPYING
-%{_prefix}/crawler/extensions/antiword/lic/ChangeLog
-%{_prefix}/crawler/extensions/antiword/lic/QandA
-%{_prefix}/crawler/extensions/antiword/lic/ReadMe
-%{_prefix}/crawler/extensions/pdftotext/bin/pdftotext
-%{_prefix}/crawler/extensions/pdftotext/lic/ANNOUNCE
-%{_prefix}/crawler/extensions/pdftotext/lic/CHANGES
-%{_prefix}/crawler/extensions/pdftotext/lic/COPYING
-%{_prefix}/crawler/extensions/pdftotext/lic/INSTALL
-%{_prefix}/crawler/extensions/pdftotext/lic/README
-%{_prefix}/crawler/extensions/ps2ascii/bin/ps2ascii
-%{_prefix}/crawler/extensions/ps2ascii/lic/Copying.htm
-%{_prefix}/crawler/extensions/ps2ascii/lic/Public.htm
-%{_prefix}/crawler/extensions/ps2ascii/lic/README
-%{_prefix}/crawler/extensions/rtf2html/bin/rtf2html
-%{_prefix}/crawler/extensions/rtf2html/lic/README
-%{_prefix}/crawler/extensions/rtf2html/lic/README.orig
-%{_prefix}/crawler/extensions/xlspptToHtml/bin/ppthtml
-%{_prefix}/crawler/extensions/xlspptToHtml/bin/xlhtml
-%{_prefix}/crawler/extensions/xlspptToHtml/lic/AUTHORS
-%{_prefix}/crawler/extensions/xlspptToHtml/lic/COPYING
+
+%dir %{_prefix}/crawler/extensions
+%dir %{_prefix}/crawler/extensions/antiword
+%dir %{_prefix}/crawler/extensions/antiword/bin
+%attr(755,root,root) %{_prefix}/crawler/extensions/antiword/bin/antiword
+%{_prefix}/crawler/extensions/antiword/data
+%{_prefix}/crawler/extensions/antiword/lic
+
+%dir %{_prefix}/crawler/extensions/pdftotext
+%dir %{_prefix}/crawler/extensions/pdftotext/bin
+%attr(755,root,root) %{_prefix}/crawler/extensions/pdftotext/bin/pdftotext
+%{_prefix}/crawler/extensions/pdftotext/lic
+
+%dir %{_prefix}/crawler/extensions/ps2ascii
+%dir %{_prefix}/crawler/extensions/ps2ascii/bin
+%attr(755,root,root) %{_prefix}/crawler/extensions/ps2ascii/bin/ps2ascii
+%{_prefix}/crawler/extensions/ps2ascii/lic
+
+%dir %{_prefix}/crawler/extensions/rtf2html
+%dir %{_prefix}/crawler/extensions/rtf2html/bin
+%attr(755,root,root) %{_prefix}/crawler/extensions/rtf2html/bin/rtf2html
+%{_prefix}/crawler/extensions/rtf2html/lic
+
+%dir %{_prefix}/crawler/extensions/xlspptToHtml
+%dir %{_prefix}/crawler/extensions/xlspptToHtml/bin
+%attr(755,root,root) %{_prefix}/crawler/extensions/xlspptToHtml/bin/ppthtml
+%attr(755,root,root) %{_prefix}/crawler/extensions/xlspptToHtml/bin/xlhtml
+%{_prefix}/crawler/extensions/xlspptToHtml/lic
