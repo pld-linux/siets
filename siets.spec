@@ -1,6 +1,7 @@
 %define		_snap	20060810
 %define		_rel	0.4
-Summary:	siets
+Summary:	siets - search engines platform
+Summary(pl):	siets - platforma dla wyszukiwarek
 Name:		siets
 Version:	3.4.3
 Release:	0.%{_snap}.%{_rel}
@@ -12,6 +13,7 @@ NoSource:	0
 URL:		http://www.siets.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# XXX: FHS - is it possible to fix?
 %define		_prefix		/usr/local/siets
 %define		_bindir		%{_prefix}/bin
 %define		_sbindir	%{_prefix}/crawler/bin
@@ -25,7 +27,15 @@ of high performance search engines.
 
 Benefit from its simplicity to use, quality of functions, XML-based
 platform independence, use of industry's best-practice standards,
-scalability throgh Linux clustering and low-cost.
+scalability through Linux clustering and low-cost.
+
+%description -l pl
+siets to innowacyjna platforma programowa do tworzenia i dzia³ania
+wysoko wydajnych wyszukiwarek.
+
+Zalety tej platformy to prostota u¿ycia, jako¶æ funkcji, niezale¿no¶æ
+od platformy opartej na XML, u¿ycie najlepiej sprawdzonych standardów
+przemys³owych, skalowalno¶æ poprzez klastry Linuksowe oraz niska cena.
 
 %prep
 %setup -q -c -T
@@ -105,7 +115,6 @@ install -d $RPM_BUILD_ROOT%{_prefix}/log
 install -d $RPM_BUILD_ROOT%{_prefix}/data
 install -d $RPM_BUILD_ROOT%{_prefix}/crawler/crawl_tasks
 install -d $RPM_BUILD_ROOT%{_prefix}/crawler/log
-
 
 install -d $RPM_BUILD_ROOT%{_prefix}/conf
 cp -a server/conf/access.xml $RPM_BUILD_ROOT%{_prefix}/conf/access.xml
