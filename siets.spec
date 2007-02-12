@@ -1,7 +1,7 @@
 %define		_snap	20060810
 %define		_rel	0.4
 Summary:	siets - search engines platform
-Summary(pl):	siets - platforma dla wyszukiwarek
+Summary(pl.UTF-8):   siets - platforma dla wyszukiwarek
 Name:		siets
 Version:	3.4.3
 Release:	0.%{_snap}.%{_rel}
@@ -29,13 +29,13 @@ Benefit from its simplicity to use, quality of functions, XML-based
 platform independence, use of industry's best-practice standards,
 scalability through Linux clustering and low-cost.
 
-%description -l pl
-siets to innowacyjna platforma programowa do tworzenia i dzia≥ania
+%description -l pl.UTF-8
+siets to innowacyjna platforma programowa do tworzenia i dzia≈Çania
 wysoko wydajnych wyszukiwarek.
 
-Zalety tej platformy to prostota uøycia, jako∂Ê funkcji, niezaleøno∂Ê
-od platformy opartej na XML, uøycie najlepiej sprawdzonych standardÛw
-przemys≥owych, skalowalno∂Ê poprzez klastry Linuksowe oraz niska cena.
+Zalety tej platformy to prostota u≈ºycia, jako≈õƒá funkcji, niezale≈ºno≈õƒá
+od platformy opartej na XML, u≈ºycie najlepiej sprawdzonych standard√≥w
+przemys≈Çowych, skalowalno≈õƒá poprzez klastry Linuksowe oraz niska cena.
 
 %prep
 %setup -q -c -T
