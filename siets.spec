@@ -1,7 +1,7 @@
 %define		_snap	20060810
 %define		_rel	0.4
 Summary:	siets - search engines platform
-Summary(pl.UTF-8):   siets - platforma dla wyszukiwarek
+Summary(pl.UTF-8):	siets - platforma dla wyszukiwarek
 Name:		siets
 Version:	3.4.3
 Release:	0.%{_snap}.%{_rel}
