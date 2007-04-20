@@ -1,5 +1,5 @@
-%define		_snap	20060810
-%define		_rel	0.4
+%define		_snap	20070314
+%define		_rel	0.1
 Summary:	siets - search engines platform
 Summary(pl.UTF-8):	siets - platforma dla wyszukiwarek
 Name:		siets
@@ -8,7 +8,7 @@ Release:	0.%{_snap}.%{_rel}
 License:	?
 Group:		Applications
 Source0:	http://www.siets.biz/server/download/files_out_there/SIETS-%{_snap}.setup
-# NoSource0-md5:	f8b752004df7bb77c98aed5853390866
+# NoSource0-md5:	77149c9609c5608334d124dd377c07e7
 NoSource:	0
 URL:		http://www.siets.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
