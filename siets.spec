@@ -1,24 +1,38 @@
+# TODO
+# - FHS
+# - subpackages for components
+# - webapps
+#
 %define		_snap	20070314
-%define		_rel	0.1
+%define		_rel	0.4
 Summary:	siets - search engines platform
 Summary(pl.UTF-8):	siets - platforma dla wyszukiwarek
 Name:		siets
 Version:	3.4.3
 Release:	0.%{_snap}.%{_rel}
 License:	?
-Group:		Applications
+Group:		Networking/Daemons
 Source0:	http://www.siets.biz/server/download/files_out_there/SIETS-%{_snap}.setup
 # NoSource0-md5:	77149c9609c5608334d124dd377c07e7
 NoSource:	0
 URL:		http://www.siets.net/
+BuildRequires:	rpmbuild(macros) >= 1.202
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Provides:	group(siets)
+Provides:	user(siets)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # XXX: FHS - is it possible to fix?
 %define		_prefix		/usr/local/siets
 %define		_bindir		%{_prefix}/bin
 %define		_sbindir	%{_prefix}/crawler/bin
-%define		_cgidir		/home/services/apache/cgi-bin/siets
-%define		_htmldir	/home/services/apache/html/siets
+%define		_cgidir		/home/services/httpd/cgi-bin/siets
+%define		_htmldir	/home/services/httpd/html/siets
 %define		_sysconfdir	/etc/siets
 
 %description
@@ -37,6 +51,13 @@ Zalety tej platformy to prostota użycia, jakość funkcji, niezależność
 od platformy opartej na XML, użycie najlepiej sprawdzonych standardów
 przemysłowych, skalowalność poprzez klastry Linuksowe oraz niska cena.
 
+%package crawler
+Summary:	Siets crawler
+Group:		Applications/WWW
+
+%description crawler
+Siets crawler.
+
 %prep
 %setup -q -c -T
 sh %{SOURCE0} --tar xf
@@ -44,6 +65,7 @@ sh %{SOURCE0} --tar xf
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_cgidir},%{_htmldir}}
+install -d $RPM_BUILD_ROOT%{_prefix}/{data,log}
 
 # siets
 install server/bin/siets-alertd $RPM_BUILD_ROOT%{_bindir}
@@ -155,8 +177,19 @@ cp -a sem/conf/manager_cfg.xml $RPM_BUILD_ROOT%{_htmldir}/conf
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%pre
+%groupadd -g 186 siets
+%useradd -u 186 -g siets -c "Siets User" siets
+
+%postun
+if [ "$1" = "0" ]; then
+	%userremove siets
+	%groupremove siets
+fi
+
 %files
 %defattr(644,root,root,755)
+%doc licence.msg
 %dir %{_sysconfdir}
 %config %{_sysconfdir}/siets_cfg.xml
 %attr(755,root,root) %{_cgidir}/api-ws.cgi
@@ -174,6 +207,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_htmldir}/search.html
 %dir %{_htmldir}/templates
 %{_htmldir}/templates/*
+
 %attr(755,root,root) %{_bindir}/archive-handler
 %attr(755,root,root) %{_bindir}/managed-xml
 %attr(755,root,root) %{_bindir}/managedctl
@@ -186,6 +220,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/siets-masterd
 %attr(755,root,root) %{_bindir}/siets-mtxd
 %attr(755,root,root) %{_bindir}/sietsco
+
 %dir %{_prefix}/conf
 %{_prefix}/conf/access.xml
 %{_prefix}/conf/managed_inst_cfg.xml
@@ -196,6 +231,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/conf/templates/mail_desc.xml
 %{_prefix}/conf/templates/mail_policy.xml
 %{_prefix}/conf/templates/policy_template.xml
+
+%dir %attr(755,siets,siets) %{_prefix}/data
+%dir %attr(700,siets,siets) %{_prefix}/log
+
 %attr(755,root,root) %{_sbindir}/cpy
 %attr(755,root,root) %{_sbindir}/crawld
 %attr(755,root,root) %{_sbindir}/crawldctl
@@ -203,6 +242,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/down_manager
 %attr(755,root,root) %{_sbindir}/downloader
 %attr(755,root,root) %{_sbindir}/run_crawler
+
+%files crawler
+%defattr(644,root,root,755)
 %dir %{_prefix}/crawler
 %dir %{_prefix}/crawler/conf
 %{_prefix}/crawler/conf/content.type
