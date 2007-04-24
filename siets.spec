@@ -53,10 +53,14 @@ przemysłowych, skalowalność poprzez klastry Linuksowe oraz niska cena.
 
 %package crawler
 Summary:	Siets crawler
+Summary(pl.UTF-8):	Przeszukiwacz Siets
 Group:		Applications/WWW
 
 %description crawler
 Siets crawler.
+
+%description crawler -l pl.UTF-8
+Przeszukiwacz Siets.
 
 %prep
 %setup -q -c -T
